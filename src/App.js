@@ -5,6 +5,7 @@ import Gallery from './components/Gallery'
 import SearchBar from './components/SearchBar'
 import AlbumView from './components/AlbumView';
 import ArtistView from './components/ArtistView';
+import { DataContext } from './components/context/DataContext';
 
 function App() {
   let [searchTerm, setSearchTerm] = useState('')
@@ -35,16 +36,9 @@ function App() {
   return (
     <div className="App">
       {message}
-      <Router>
-        <Routes>
-          <Route exact path="/" element={<><SearchBar handleSearch={handleSearch} /><Gallery data={data} /></>}>
-          </Route>
-          <Route path="/album/:id" element={<AlbumView term={searchTerm} />}>
-          </Route>
-          <Route path="/artist/:id" element={<ArtistView term={searchTerm} />}>
-          </Route>
-        </Routes>
-      </Router>
+      <DataContext.Provider value={data}>
+        <Gallery />
+      </DataContext.Provider>
     </div>
   )
 }
